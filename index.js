@@ -22,5 +22,6 @@ client.on("message", message => {
         console.log("Erro:" + err)
     }
 });
+console.log(process.env.TOKEN);
 
 client.login(process.env.TOKEN);
