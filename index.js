@@ -15,6 +15,10 @@ const client = new Discord.Client();
 
 const config = require("./config.json");
 
+client.on('ready', () => {
+    console.log("TO PRONTO!");
+});
+
 client.on("message", message => {
     if(message.author.bot) return;
     if(message.channel.type == "dm"){
@@ -30,7 +34,7 @@ client.on("message", message => {
     }
     catch(err){
         console.log("Erro:" + err)
-        message.channel.send("MANO, CÊ É BURRO? Eu não reconheço esse comando, aprende a escrever mané!");
+        message.channel.send("MANO, CÊ É BURRO? Eu não reconheço esse comando, aprende a escrever, mané!");
     }
 });
 
