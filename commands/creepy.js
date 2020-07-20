@@ -23,6 +23,6 @@ module.exports.run = async (client, message, args) => {
         .catch(console.error);
     }
     else{
-        message.channel.send("Amigão, tu precisa estar conectado em um canal de voz... PENSA UM POUCO ANIMAL!!!!!");
+        message.reply("Você precisa estar conectado em um canal de voz para usar esse comando!!");
     }
 };

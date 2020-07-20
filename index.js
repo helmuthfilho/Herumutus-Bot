@@ -16,13 +16,13 @@ const client = new Discord.Client();
 const config = require("./config.json");
 
 client.on('ready', () => {
-    console.log("TO PRONTO!");
+    console.log("Im' ready!");
 });
 
 client.on("message", message => {
     if(message.author.bot) return;
     if(message.channel.type == "dm"){
-        message.channel.send("SAI DAQUI MALUCO!");
+        message.channel.send("Olá, você pode digitar 'h!help' no seu servidor de discord para ver uma lista com todos os meus comandos!");
     }
     if(!message.content.toLowerCase().startsWith(config.prefix)) return;
     const args = message.content.trim().slice(config.prefix.length).split(/ +/g);
@@ -33,8 +33,8 @@ client.on("message", message => {
         commandFile.run(client,message,args);
     }
     catch(err){
-        console.log("Erro:" + err)
-        message.channel.send("MANO, CÊ É BURRO? Eu não reconheço esse comando, aprende a escrever, mané!");
+        console.log("Error:" + err)
+        message.reply("Desculpe, eu não entendi esse comando!");
     }
 });
 
