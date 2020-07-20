@@ -17,6 +17,24 @@ const config = require("./config.json");
 
 client.on('ready', () => {
     console.log("Im' ready!");
+    for(var guild of client.guilds.cache.entries()){
+        for(var channel of guild[1].channels.cache.entries()){
+            if(channel[1].type == 'text'){
+                const embed = new Discord.MessageEmbed()
+                    .setColor('#00FF00')
+                    .setTitle('Estou de volta!')
+                    .setURL('')
+                    .setAuthor('Herumutu\'s BOT','https://www.iconsdb.com/icons/preview/guacamole-green/circle-xxl.png')
+                    .setDescription("Estou Online novamente, digite 'h!help' para ver os meus comandos")
+                    .setThumbnail('https://raw.githubusercontent.com/ashwurz/Herumutus-Bot/master/Image/Bot_Icon_Uptade.png')
+                    .setTimestamp(new Date())
+                    .setFooter("© Herumutu's BOT Corporation");
+
+                channel[1].send(embed);
+                break;
+            }
+        }
+    }
 });
 
 client.on("message", message => {

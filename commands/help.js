@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
       ],
       timestamp: new Date(),
       footer: {
-        icon_url: client.user.avatarURL,
+        icon_url: "https://raw.githubusercontent.com/ashwurz/Herumutus-Bot/master/Image/Bot_Icon_Uptade.png",
         text: "© Herumutu's BOT Corporation"
       }
     }
