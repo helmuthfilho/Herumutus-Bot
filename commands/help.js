@@ -28,6 +28,10 @@ module.exports.run = async (client, message, args) => {
         value: "Mostra uma imagem com os lugares para se upar"
       },
       {
+        name:"h!ping",
+        value:"Comando para verificar a conectividade do BOT com o servidor."
+      },
+      {
         name: "h!creepy",
         value: "..."
       }
