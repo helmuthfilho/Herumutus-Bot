@@ -25,7 +25,7 @@ client.on('ready', () => {
                     .setTitle('Estou de volta!')
                     .setURL('')
                     .setAuthor('Herumutu\'s BOT','https://www.iconsdb.com/icons/preview/guacamole-green/circle-xxl.png')
-                    .setDescription("Estou Online novamente, digite 'h!help' para ver os meus comandos")
+                    .setDescription(`Estou Online novamente, digite '${config.prefix}help' para ver os meus comandos`)
                     .setThumbnail('https://raw.githubusercontent.com/ashwurz/Herumutus-Bot/master/Image/Bot_Icon_Uptade.png')
                     .setTimestamp(new Date())
                     .setFooter("© Herumutu's BOT Corporation");
@@ -35,6 +35,8 @@ client.on('ready', () => {
             }
         }
     }
+
+    client.user.setActivity(`${config.prefix}help`,{type: 'LISTENING'});
 });
 
 client.on("message", message => {

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { config } = require('dotenv/lib/main');
 
 module.exports.run = async (client, message, args) => {
   message.channel.send({
@@ -30,6 +31,10 @@ module.exports.run = async (client, message, args) => {
       {
         name:"h!ping",
         value:"Comando para verificar a conectividade do BOT com o servidor."
+      },
+      {
+        name:"h!uptime",
+        value:"Comando para verificar quanto tempo o bot está online"
       },
       {
         name: "h!creepy",
