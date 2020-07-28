@@ -1,5 +1,0 @@
-Comandos do Herumutus BOT:
-
-H!say - Faz o bot falar por você
-H!hyperstats - Mostra uma URL com as informações sobre HyperStats do MapleStory
-H!scrapyard-quests - Mostra uma imagem com a relação entre as quests semanais em Scrapyard

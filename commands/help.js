@@ -37,6 +37,10 @@ module.exports.run = async (client, message, args) => {
         value:"Comando para verificar quanto tempo o bot está online"
       },
       {
+        name:"h!avatar",
+        value:"Mostra o seu avatar ou o de quem for marcado"
+      },
+      {
         name: "h!creepy",
         value: "..."
       }

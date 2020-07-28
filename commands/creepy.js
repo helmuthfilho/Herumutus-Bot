@@ -4,10 +4,19 @@ const ytdl = require('ytdl-core');
 const streamOptions = {seek: 0, volume: 1};
 
 module.exports.run = async (client, message, args) => {
+    var creepyList = [
+        "./Image/herumutus_creepypasta.png",
+        "./Image/sad_man.png",
+        "./Image/world_destroyer.png",
+        "./Image/mashitas_curse.png"
+    ];
+
+    var creepyRandom = creepyList[Math.floor(Math.random() * creepyList.length)];
+
     if(message.member.voice.channel){
         message.channel.send('SOCIEDADE MUAHAHAHAHAHA', {
             files: [
-                "./Image/herumutus_creepypasta.png"
+                creepyRandom
             ]
         });
 
