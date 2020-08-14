@@ -18,11 +18,8 @@ const config = require("./config.json");
 client.on('ready', () => {
     console.log("Im' ready!");
     for(var guild of client.guilds.cache.entries()){
-        if(guild[0] == "382695161815367681"){
-            break;
-        }
         for(var channel of guild[1].channels.cache.entries()){
-            if(channel[1].type == 'text'){
+            if(channel[1].type == 'text' && guild[0] != "382695161815367681"){
                 const embed = new Discord.MessageEmbed()
                     .setColor('#00FF00')
                     .setTitle('Estou de volta!')
