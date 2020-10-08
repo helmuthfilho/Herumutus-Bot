@@ -13,6 +13,8 @@ app.listen(process.env.PORT || 5000);
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const queue = new Map();
+
 const config = require("./config.json");
 
 client.on('ready', () => {
@@ -50,7 +52,13 @@ client.on("message", message => {
 
     try{
         const commandFile  = require('./commands/' + command + ".js");
-        commandFile.run(client,message,args);
+        
+        if(command == "play" || command == "skip" || command == "stop"){
+            const serverQueue = queue.get(message.guild.id);
+            commandFile.run(client, message, args, serverQueue, queue)
+        }else{
+            commandFile.run(client,message,args);
+        }
     }
     catch(err){
         console.log("Error:" + err)
