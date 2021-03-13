@@ -4,6 +4,11 @@ const ytdl = require('ytdl-core');
 const streamOptions = {seek: 0, volume: 1};
 
 module.exports.run = async (client, message, args) => {
+
+    message.reply("Este comando está interditado, no momento foi mal maninho 😭");
+    
+    return;
+
     var creepyList = [
         "./Image/herumutus_creepypasta.png",
         "./Image/sad_man.png",
