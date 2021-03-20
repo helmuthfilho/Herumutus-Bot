@@ -1,7 +1,7 @@
 require('ffmpeg');
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
-const streamOptions = {seek: 0, volume: 1};
+const streamOptions = {seek: 0, volume: 10};
 
 module.exports.run = async (client, message, args) => {
     var creepyList = [
@@ -20,16 +20,16 @@ module.exports.run = async (client, message, args) => {
             ]
         });
 
-        message.member.voice.channel.join()
-        .then(connection =>{
-            const stream = ytdl('https://www.youtube.com/watch?v=NwN-hRaQaXM');
-    
-            const DJ = connection.play(stream, streamOptions);
-            DJ.on('finish', () =>{
-                message.member.voice.channel.leave();
-            });
-        })
-        .catch(console.error);
+        const connection = await message.member.voice.channel.join();
+
+        const stream = ytdl('https://www.youtube.com/watch?v=NwN-hRaQaXM');
+
+        console.log(streamOptions);
+
+        connection.play(stream, streamOptions)
+        .on('finish', () =>{
+            message.member.voice.channel.leave();
+        });
     }
     else{
         message.reply("Você precisa estar conectado em um canal de voz para usar esse comando!!");
