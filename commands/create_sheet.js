@@ -1,8 +1,8 @@
 require('dotenv/config');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
 const Discord = require('discord.js');
 const ExceptionHandler = require('../Helpers/exception_handler.js');
 const GoogleSpreadsheetHelper = require('../Helpers/google_spreadsheet_helper.js');
+const MessageEmbedHelper = require('../Helpers/message_embed_helper.js');
 
 module.exports.run = async (client, message, args) => {
     try{
@@ -35,29 +35,11 @@ module.exports.run = async (client, message, args) => {
         const embed = new Discord.MessageEmbed();
 
         if(newSheet != undefined || newSheet != null){
-            embed.setColor('#00FF00')
-            .setTitle('Sucesso!')
-            .setURL('')
-            .setAuthor(`${message.author.username}`,`${message.author.displayAvatarURL()}`)
-            .setDescription(`O insert do usuário "${args[0]}" ocorreu com sucesso 😄`)
-            .setThumbnail('https://raw.githubusercontent.com/ashwurz/Herumutus-Bot/master/Image/Bot_Icon_Uptade.png')
-            .setTimestamp(new Date())
-            .setFooter("© Herumutu's BOT Corporation");
-
-            message.channel.send(embed);
+            MessageEmbedHelper.sendSucessEmbed(embed, message, `A criação da planilha "${sheetTitle}" ocorreu com sucesso 😄`);
             return;
         }
 
-        embed.setColor('#FF0000')
-        .setTitle('Erro!')
-        .setURL('')
-        .setAuthor(`${message.author.username}`,'https://www.iconsdb.com/icons/preview/soylent-red/alert-xxl.png')
-        .setDescription(`🤬 Algo de errado aconteceu ao tentar inserir o usuário "${args[0]}". Verifique os logs!!! 🤬`)
-        .setThumbnail('https://raw.githubusercontent.com/ashwurz/Herumutus-Bot/master/Image/sad_man.png')
-        .setTimestamp(new Date())
-        .setFooter("© Herumutu's BOT Corporation");
-
-        message.channel.send(embed);
+        MessageEmbedHelper.sendErrorEmbed(embed, message, `🤬 Algo de errado aconteceu ao tentar criar a planilha "${sheetTitle}". Verifique os logs!!! 🤬`);
     }
     catch(err){
         ExceptionHandler.replyExceptionMessage(message, err);
