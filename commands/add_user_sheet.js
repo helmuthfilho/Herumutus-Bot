@@ -1,6 +1,7 @@
 require('dotenv/config');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const Discord = require('discord.js');
+const ExceptionHandler = require('./Helpers/exception_handler.js');
 
 module.exports.run = async (client, message, args) => {
     try
@@ -21,7 +22,7 @@ module.exports.run = async (client, message, args) => {
     
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
-            private_key: process.env.PRIVATE_KEY.replace(/\\n/g, "\n"),
+            private_key: process.env.PRIVATE_KEY,
         });
         
         await doc.loadInfo();
@@ -65,7 +66,6 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(embed);
     }
     catch(err){
-        message.reply(`Deu um erro aqui:\n  ${err}`);
-        console.log(err);
+        ExceptionHandler.replyExceptionMessage(message, err);
     }
 }
