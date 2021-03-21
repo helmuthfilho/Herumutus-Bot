@@ -1,39 +1,40 @@
 require('dotenv/config');
+const { GoogleSpreadsheet } = require('google-spreadsheet');
 const Discord = require('discord.js');
 const ExceptionHandler = require('../Helpers/exception_handler.js');
-const GoogleSpreadSheetHelper = require('../Helpers/google_spreadsheet_helper.js');
+const GoogleSpreadsheetHelper = require('../Helpers/google_spreadsheet_helper.js');
 
 module.exports.run = async (client, message, args) => {
-    try
-    {
-        if(args.length > 2 || args.length < 2){
-            message.reply("Este comando deve ter até dois argumentos!\n" +
-            "h!add_user_sheet [1] [2]\n" +
-            "Sendo [1]: ID do usuário e [2]: Username do usuário");
+    try{
+        if(args.length < 2){
+            message.reply("Para usar este comando são necessários no mínimo 2 argumentos:\n" +
+                          "h!create_sheet [1] [2] [3] ...\n" +
+                          "Sendo [1]: o título da planilha e [2], [3] ...: os headers da planilha");
             return;
         }
 
-        if(message.author.id !== process.env.DISCORD_MASTER_USER_ID){
-            message.reply("Só o meu criador pode utilizar este comando 🤪");
-            return;
-        }
-
-        const spreadSheet = await GoogleSpreadSheetHelper.loginSpreadSheet();
-
+        let authorId = message.author.id;
+        let spreadSheet = await GoogleSpreadsheetHelper.loginSpreadSheet();
+        
         let userAuthenticationSheet = spreadSheet.sheetsById[process.env.USER_AUTHENTICATION__SHEET_ID];
 
-        let rowsBeforeInsert = await userAuthenticationSheet.getRows();
+        if(!await GoogleSpreadsheetHelper.authenticateUser(authorId, userAuthenticationSheet)){
+            message.reply("Seu usuário não é autenticado para poder utilizar este comando.");
+            return;
+        }
 
-        let rowsCountBeforeInsert = rowsBeforeInsert.length;
+        let sheetTitle = args[0];
+        let sheetHeaders = [];
+        
+        for(let i = 1; i < args.length; i++){
+            sheetHeaders.push(args[i]);
+        }
 
-        let insertedRow = await userAuthenticationSheet.addRow({ID: args[0], Username: args[1]});
-
-        //Minus one because the row index considers the header of the sheet as a row, while .getRows() don't
-        let rowsCountAfterInsert = insertedRow.rowIndex - 1;
+        let newSheet = await spreadSheet.addSheet({title: sheetTitle, headerValues: sheetHeaders});
 
         const embed = new Discord.MessageEmbed();
 
-        if(rowsCountAfterInsert > rowsCountBeforeInsert){
+        if(newSheet != undefined || newSheet != null){
             embed.setColor('#00FF00')
             .setTitle('Sucesso!')
             .setURL('')
