@@ -1,4 +1,5 @@
 require('dotenv/config');
+const ExceptionHandler = require('./Helpers/exception_handler.js');
 
 const express = require('express');
 const app = express();
@@ -53,8 +54,7 @@ client.on("message", message => {
         commandFile.run(client,message,args);
     }
     catch(err){
-        console.log("Error:" + err)
-        message.reply("Desculpe, eu não entendi esse comando!");
+        ExceptionHandler.replyExceptionMessage(message, err, "Desculpe, eu não entendi esse comando!");
     }
 });
 

@@ -1,7 +1,7 @@
 require('dotenv/config');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const Discord = require('discord.js');
-const ExceptionHandler = require('./Helpers/exception_handler.js');
+const ExceptionHandler = require('../Helpers/exception_handler.js');
 
 module.exports.run = async (client, message, args) => {
     try
