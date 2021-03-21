@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
 
         let userAuthenticationSheet = doc.sheetsById[process.env.USER_AUTHENTICATION__SHEET_ID];
 
-        await userAuthenticationSheet.addRows({Username: args});
+        await userAuthenticationSheet.addRows({Username: args[0]});
 
     }
     catch(err){
