@@ -1,7 +1,7 @@
-require('dotenv/config');
-const ExceptionHandler = require('./Helpers/exception_handler.js');
+import 'dotenv/config.js';
+import { replyExceptionMessage } from './Helpers/exception_handler.js';
 
-const express = require('express');
+import express from 'express';
 const app = express();
 app.get("/", (request, response) => {
   const ping = new Date();
@@ -11,9 +11,11 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT || 5000); 
 
-const Discord = require('discord.js');
-const client = new Discord.Client();
+import { Client, MessageEmbed } from 'discord.js';
+const client = new Client();
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const config = require("./config.json");
 
 client.on('ready', () => {
@@ -21,7 +23,7 @@ client.on('ready', () => {
     for(var guild of client.guilds.cache.entries()){
         for(var channel of guild[1].channels.cache.entries()){
             if(channel[1].type == 'text' && guild[0] != "382695161815367681"){
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                     .setColor('#00FF00')
                     .setTitle('Estou de volta!')
                     .setURL('')
@@ -40,7 +42,7 @@ client.on('ready', () => {
     client.user.setActivity(`${config.prefix}help`,{type: 'LISTENING'});
 });
 
-client.on("message", message => {
+client.on("message", async (message) =>  {
     if(message.author.bot) return;
     if(message.channel.type == "dm"){
         message.channel.send("Olá, você pode digitar 'h!help' no seu servidor de discord para ver uma lista com todos os meus comandos!");
@@ -50,11 +52,11 @@ client.on("message", message => {
     const command = args.shift().toLowerCase();
 
     try{
-        const commandFile  = require('./commands/' + command + ".js");
-        commandFile.run(client,message,args);
+        const { run } = await import("./commands/" + command + ".js")
+        run(client, message, args);
     }
     catch(err){
-        ExceptionHandler.replyExceptionMessage(message, err, "Desculpe, eu não entendi esse comando!");
+        replyExceptionMessage(message, err, "Desculpe, eu não entendi esse comando!");
     }
 });
 

@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
     const m = await message.channel.send('ping?');
 
     m.edit(`🏓 **| Pong!**\nLatência do Server: **${m.createdTimestamp -
@@ -8,4 +8,4 @@ module.exports.run = async (client, message, args) => {
             client.ws.ping
         )}ms**`
     );
-};
+}

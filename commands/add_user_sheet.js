@@ -1,10 +1,10 @@
-require('dotenv/config');
-const Discord = require('discord.js');
-const ExceptionHandler = require('../Helpers/exception_handler.js');
-const GoogleSpreadSheetHelper = require('../Helpers/google_spreadsheet_helper.js');
-const MessageEmbedHelper = require('../Helpers/message_embed_helper.js');
+import 'dotenv/config';
+import { MessageEmbed } from 'discord.js';
+import { replyExceptionMessage } from '../Helpers/exception_handler.js';
+import { loginSpreadSheet } from '../Helpers/google_spreadsheet_helper.js';
+import { sendSucessEmbed, sendErrorEmbed } from '../Helpers/message_embed_helper.js';
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
     try
     {
         if(args.length > 2 || args.length < 2){
@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
             return;
         }
 
-        const spreadSheet = await GoogleSpreadSheetHelper.loginSpreadSheet();
+        const spreadSheet = await loginSpreadSheet();
 
         let userAuthenticationSheet = spreadSheet.sheetsById[process.env.USER_AUTHENTICATION__SHEET_ID];
 
@@ -32,16 +32,16 @@ module.exports.run = async (client, message, args) => {
         //Minus one because the row index considers the header of the sheet as a row, while .getRows() don't
         let rowsCountAfterInsert = insertedRow.rowIndex - 1;
 
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
 
         if(rowsCountAfterInsert > rowsCountBeforeInsert){
-            MessageEmbedHelper.sendSucessEmbed(embed, message, `O insert do usuário "${args[0]}" ocorreu com sucesso 😄`)
+            sendSucessEmbed(embed, message, `O insert do usuário "${args[0]}" ocorreu com sucesso 😄`)
             return;
         }
 
-        MessageEmbedHelper.sendErrorEmbed(embed, message, `🤬 Algo de errado aconteceu ao tentar inserir o usuário "${args[0]}". Verifique os logs!!! 🤬`);
+        sendErrorEmbed(embed, message, `🤬 Algo de errado aconteceu ao tentar inserir o usuário "${args[0]}". Verifique os logs!!! 🤬`);
     }
     catch(err){
-        ExceptionHandler.replyExceptionMessage(message, err);
+        replyExceptionMessage(message, err);
     }
 }

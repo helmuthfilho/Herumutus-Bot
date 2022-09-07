@@ -1,7 +1,7 @@
-const Discord = require('discord.js');
-const { config } = require('dotenv/lib/main');
+import Discord from 'discord.js';
+import { config } from 'dotenv/lib/main';
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
   message.channel.send({
     embed: {
       color: 3447003,
@@ -52,4 +52,4 @@ module.exports.run = async (client, message, args) => {
       }
     }
   });
-};
+}

@@ -1,10 +1,10 @@
-require('dotenv/config');
-const Discord = require('discord.js');
-const ExceptionHandler = require('../Helpers/exception_handler.js');
-const GoogleSpreadsheetHelper = require('../Helpers/google_spreadsheet_helper.js');
-const MessageEmbedHelper = require('../Helpers/message_embed_helper.js');
+import 'dotenv/config';
+import { MessageEmbed } from 'discord.js';
+import { replyExceptionMessage } from '../Helpers/exception_handler.js';
+import { loginSpreadSheet, authenticateUser } from '../Helpers/google_spreadsheet_helper.js';
+import { sendSucessEmbed, sendErrorEmbed } from '../Helpers/message_embed_helper.js';
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
     try{
         if(args.length < 2){
             message.reply("Para usar este comando são necessários no mínimo 2 argumentos:\n" +
@@ -14,11 +14,11 @@ module.exports.run = async (client, message, args) => {
         }
 
         let authorId = message.author.id;
-        let spreadSheet = await GoogleSpreadsheetHelper.loginSpreadSheet();
+        let spreadSheet = await loginSpreadSheet();
         
         let userAuthenticationSheet = spreadSheet.sheetsById[process.env.USER_AUTHENTICATION__SHEET_ID];
 
-        if(!await GoogleSpreadsheetHelper.authenticateUser(authorId, userAuthenticationSheet)){
+        if(!await authenticateUser(authorId, userAuthenticationSheet)){
             message.reply("Seu usuário não é autenticado para poder utilizar este comando.");
             return;
         }
@@ -32,16 +32,16 @@ module.exports.run = async (client, message, args) => {
 
         let newSheet = await spreadSheet.addSheet({title: sheetTitle, headerValues: sheetHeaders});
 
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
 
         if(newSheet != undefined || newSheet != null){
-            MessageEmbedHelper.sendSucessEmbed(embed, message, `A criação da planilha "${sheetTitle}" ocorreu com sucesso 😄`);
+            sendSucessEmbed(embed, message, `A criação da planilha "${sheetTitle}" ocorreu com sucesso 😄`);
             return;
         }
 
-        MessageEmbedHelper.sendErrorEmbed(embed, message, `🤬 Algo de errado aconteceu ao tentar criar a planilha "${sheetTitle}". Verifique os logs!!! 🤬`);
+        sendErrorEmbed(embed, message, `🤬 Algo de errado aconteceu ao tentar criar a planilha "${sheetTitle}". Verifique os logs!!! 🤬`);
     }
     catch(err){
-        ExceptionHandler.replyExceptionMessage(message, err);
+        replyExceptionMessage(message, err);
     }
 }

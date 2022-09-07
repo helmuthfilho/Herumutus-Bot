@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 
-module.exports.sendSucessEmbed = async function(embed, message, description, ){
+export async function sendSucessEmbed(embed, message, description, ){
     embed.setColor('#00FF00')
     .setTitle('Sucesso!')
     .setURL('')
@@ -13,7 +13,7 @@ module.exports.sendSucessEmbed = async function(embed, message, description, ){
     message.channel.send(embed);
 }  
 
-module.exports.sendErrorEmbed = async function (embed, message, description) {
+export async function sendErrorEmbed (embed, message, description) {
     embed.setColor('#FF0000')
     .setTitle('Erro!')
     .setURL('')

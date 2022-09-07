@@ -1,4 +1,4 @@
-module.exports.replyExceptionMessage = function(userMessage, err, responseMessage = ""){
+export function replyExceptionMessage(userMessage, err, responseMessage = ""){
     console.log(err);
     if(responseMessage !== ""){
         userMessage.reply(responseMessage);

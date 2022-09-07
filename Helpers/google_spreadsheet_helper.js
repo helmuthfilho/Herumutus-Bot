@@ -1,7 +1,7 @@
-require('dotenv/config');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+import 'dotenv/config';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 
-module.exports.loginSpreadSheet = async function () {
+export async function loginSpreadSheet () {
     try{
         const doc = new GoogleSpreadsheet(process.env.SPREAD_SHEED_ID);
     
@@ -19,7 +19,7 @@ module.exports.loginSpreadSheet = async function () {
     }
 }
 
-module.exports.authenticateUser = async function (userId, sheet) {
+export async function authenticateUser (userId, sheet) {
     try{
         let sheetRows = await sheet.getRows();
         for(let i = 0; i < sheetRows.length; i++){
