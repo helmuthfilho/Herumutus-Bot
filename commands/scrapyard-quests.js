@@ -1,9 +1,9 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
     message.channel.send('Scrapyard Quests', {
         files: [
             "./Image/scrapyard.png"
         ]
     });
-};
+}

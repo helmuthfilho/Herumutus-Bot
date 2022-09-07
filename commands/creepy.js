@@ -1,9 +1,9 @@
-require('ffmpeg');
-const Discord = require('discord.js');
-const ytdl = require('ytdl-core');
+import 'ffmpeg';
+import Discord from 'discord.js';
+import ytdl from 'ytdl-core';
 const streamOptions = {seek: 0, volume: 1};
 
-module.exports.run = async (client, message, args) => {
+export async function run(client, message, args) {
 
     message.reply("Este comando está interditado, no momento foi mal maninho 😭");
     
@@ -39,4 +39,4 @@ module.exports.run = async (client, message, args) => {
     else{
         message.reply("Você precisa estar conectado em um canal de voz para usar esse comando!!");
     }
-};
+}
